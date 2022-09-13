@@ -4,7 +4,9 @@
 # @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 source("./src/libraries.R")
+source("./src/data.R")
 
+# App particulars--------------------------------------------------------------
 app <- c(
   #' dependencies required in the app
   dependencies = c(
@@ -24,5 +26,9 @@ app <- c(
 
 class(app) <- "App"
 
-
+# App dependencies-------------------------------------------------------------
 app$load_dependencies(app$dependencies)
+
+test <- data_provider("./data/malnutrition.xlsx",
+                      type = "EXCEL",
+                      sheet = "Stunting Proportion (Model)")
