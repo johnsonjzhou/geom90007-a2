@@ -3,9 +3,22 @@
 # @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 
+#' Dependencies used in the app
+dependencies <- c(
+  "shiny",
+  "dplyr",
+  "readxl",
+  "ggplot2",
+  "plotly",
+  "leaflet",
+  "geojsonio",
+  "glue"
+)
+
 #' Attempts to load packages and install them if required
 #' @param dependencies - a vector of dependency names
 load_dependencies <- function(dependencies) {
+  print(dependencies)
   for (package in dependencies) {
     tryCatch({
       library(package, character.only = TRUE)
@@ -15,3 +28,5 @@ load_dependencies <- function(dependencies) {
     })
   }
 }
+
+load_dependencies(dependencies)
