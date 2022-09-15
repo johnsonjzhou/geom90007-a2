@@ -7,11 +7,14 @@
 dependencies <- c(
   "shiny",
   "dplyr",
+  "janitor",
+  "tidyr",
   "readxl",
   "ggplot2",
   "plotly",
   "leaflet",
   "geojsonio",
+  "sp",
   "glue"
 )
 

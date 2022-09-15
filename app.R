@@ -11,9 +11,5 @@ source("./src/libraries.R")
 # Data-------------------------------------------------------------------------
 source("./src/data.R")
 
-test <- data_provider("./data/malnutrition.xlsx",
-                      type = "EXCEL",
-                      sheet = "Stunting Proportion (Model)")
-
 # Mapping----------------------------------------------------------------------
 source("./src/map.R")
