@@ -13,3 +13,11 @@ source("./src/data.R")
 
 # Mapping----------------------------------------------------------------------
 source("./src/map.R")
+
+# Start the app----------------------------------------------------------------
+source("./src/ui.R")
+source("./src/server.R")
+
+if (interactive()) {
+  shiny::shinyApp(ui, server)
+}

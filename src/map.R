@@ -12,20 +12,21 @@ world_geojson <- geojsonio::geojson_read(
   what = "sp"
 )
 
-pal <- colorNumeric(
-  "Green",
-  domain = map_data@data$"2020"
-)
-
 map_data <- sp::merge(
   world_geojson, malnutrition_point,
   by.x = "id", by.y = "iso_code"
+)
+
+chloropleth_colors <- colorNumeric(
+  "Green",
+  domain = map_data@data$"2020"
 )
 
 map_data %>%
   leaflet() %>%
   addTiles() %>%
   addPolygons(
-    fillColor = ~ pal(map_data@data$"x2020"),
+    fillColor = ~ chloropleth_colors(map_data@data$"x2020"),
+    #! x2020 doesn't work below
     popup = ~ x2020
   )
