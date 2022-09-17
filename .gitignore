@@ -1,6 +1,9 @@
 # macOS
 .DS_Store
 
+# Node artifact files
+node_modules/
+
 # History files
 .Rhistory
 .Rapp.history
