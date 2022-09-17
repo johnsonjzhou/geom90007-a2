@@ -22,7 +22,7 @@ chloropleth_colors <- colorNumeric(
   domain = map_data@data$"2020"
 )
 
-map_data %>%
+leaflet_map <- map_data %>%
   leaflet() %>%
   addTiles() %>%
   addPolygons(

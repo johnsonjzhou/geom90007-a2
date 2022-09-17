@@ -6,6 +6,8 @@ library(dplyr)
 library(tidyr)
 library(janitor)
 
+print("load data")
+
 data_provider <- function(filename, type = "EXCEL", ...) {
   df <- switch(
     type,
