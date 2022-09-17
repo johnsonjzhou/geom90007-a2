@@ -6,18 +6,16 @@
 
 
 # App dependencies-------------------------------------------------------------
-source("./src/libraries.R")
+source("./R/libraries.R")
 
 # Data-------------------------------------------------------------------------
-source("./src/data.R")
+source("./R/data.R")
 
 # Mapping----------------------------------------------------------------------
-source("./src/map.R")
+source("./R/map.R")
 
 # Start the app----------------------------------------------------------------
-source("./src/ui.R")
-source("./src/server.R")
+source("./R/ui.R")
+source("./R/server.R")
 
-if (interactive()) {
-  shiny::shinyApp(ui, server)
-}
+shiny::shinyApp(ui, server)

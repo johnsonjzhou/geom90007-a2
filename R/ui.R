@@ -4,17 +4,18 @@
 ################################################################################
 library(shiny)
 
-# main <- mainPanel(
-#   tabsetPanel(
-#     tabPanel()
-#   )
-# )
+
+
+
+# Navigation bar---------------------------------------------------------------
 
 nav_menu <- navbarMenu(
   "Info", tabPanel("Info"),
   "----",
   "Another", tabPanel("Map")
 )
+
+# UI element-------------------------------------------------------------------
 
 ui <- navbarPage(
   title = "Food security and nutrition around the world",
