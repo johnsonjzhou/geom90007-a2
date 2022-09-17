@@ -19,7 +19,11 @@ headers <- tags$head(
   # css overrides
   tags$link(
     rel = "stylesheet", type = "text/css",
-    href = "shiny.css"
+    href = "shiny_app.css"
+  ),
+  # javascript
+  tags$script(
+    src = "shiny_app.js"
   )
 )
 
