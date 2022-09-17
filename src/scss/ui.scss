@@ -2,11 +2,51 @@
   Styles for the shiny UI
   @author Johnson Zhou zhoujj@student.unimelb.edu.au
  */
+ 
+$border-radius: 6px;
 
 .navbar {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  min-height: auto;
+  
   &.navbar-default {
-    backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, 0.5);
+    width: fit-content;
+    backdrop-filter: saturate(180%) blur(20px);
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: $border-radius;
+    
+    .container {
+      width: fit-content;
+      padding: 6px;
+      
+      .navbar-brand {
+        display: none;
+      }
+      
+      .navbar-header {
+        display: none;
+      }
+      
+      .navbar-nav {
+        & li {
+          & > a {
+            padding: 6px 10px;
+            border-radius: 6px;
+          }
+        }
+        
+        & > .active {
+          & > a {
+            background-color: rgba(255,255,255,0.6);
+            backdrop-filter: brightness(150%);
+          }
+        }
+      }
+    }
   }
 }
 
