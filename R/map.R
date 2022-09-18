@@ -12,13 +12,22 @@ library(colorspace)
 
 color_bins <- 5
 
+map_colors <- list(
+  "background" = "#f4f5f3",
+  "gray" = "#e7e5e6",
+  "darkgray" = "#79757d",
+  "foreground" = "#1a1b19",
+  "obesity" = "#65acab",
+  "stunting" = "#fe8a5e"
+)
+
 alpha_palette <- function(hex_col, bins = 1) {
   colors <- adjust_transparency(hex_col, (1:bins) / bins)
   return(colors)
 }
 
-obesity_pal <- alpha_palette("#65acab", color_bins)
-stunting_pal <- alpha_palette("#fe8a5e", color_bins)
+obesity_pal <- alpha_palette(map_colors$obesity, color_bins)
+stunting_pal <- alpha_palette(map_colors$stunting, color_bins)
 
 # Map definition---------------------------------------------------------------
 
@@ -45,8 +54,8 @@ chloropleth_colors <- colorBin(
 leaflet_map <- map_data %>%
   leaflet(
     options = leafletOptions(
-      minZoom = 2,
-      maxZoom = 7
+      minZoom = 3,
+      maxZoom = 6
     ),
     sizingPolicy = leafletSizingPolicy(
       defaultWidth = "100%",
@@ -54,10 +63,10 @@ leaflet_map <- map_data %>%
     )
   ) %>%
   addPolygons(
-    fill = FALSE,
-    fillOpacity = 0,
+    color = map_colors$darkgray,
     weight = 1,
-    color = "#79757d"
+    fillColor = map_colors$gray,
+    fillOpacity = 1,
   ) %>%
   addPolygons(
     weight = 0,
@@ -66,9 +75,8 @@ leaflet_map <- map_data %>%
     label = ~ x2020
   ) %>%
   addLegend(
-    position = "bottomright",
+    position = "topright",
     pal = chloropleth_colors,
     values = highlight_data,
-    bins = color_bins,
     opacity = 1
   )

@@ -2,12 +2,29 @@
   Styles for the shiny UI
   @author Johnson Zhou zhoujj@student.unimelb.edu.au
  */
- 
+
 $border-radius: 6px;
-$col-background: #f4f5f3;
-$col-gray: #e7e5e6;
-$col-darkgray: #79757d;
-$col-foreground: #1a1b19;
+
+$colors: (
+  "background": #f4f5f3,
+  "background-frost": #f4f5f399,
+  "foreground": #1a1b19,
+  "gray": #e7e5e6,
+  "darkgray": #79757d
+);
+
+@mixin frosted-panel {
+  background-color: map.get($colors, "background-frost");
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: $border-radius;
+  border: 0;
+  box-shadow: none;
+}
+
+@mixin frosted-panel-btn {
+  background-color: rgba(255,255,255,0.9);
+  backdrop-filter: saturate(180%) brightness(150%) blur(5px);
+}
 
 .navbar {
   position: absolute;
@@ -19,9 +36,7 @@ $col-foreground: #1a1b19;
   
   &.navbar-default {
     width: fit-content;
-    backdrop-filter: saturate(180%) blur(20px);
-    background-color: rgba(255, 255, 255, 0.6);
-    border-radius: $border-radius;
+    @include frosted-panel();
     
     .container {
       width: fit-content;
@@ -45,8 +60,7 @@ $col-foreground: #1a1b19;
         
         & > .active {
           & > a {
-            background-color: rgba(255,255,255,0.6);
-            backdrop-filter: brightness(150%);
+            @include frosted-panel-btn()
           }
         }
       }
@@ -62,6 +76,33 @@ $col-foreground: #1a1b19;
   left: 0;
   
   &.leaflet-container{
-    background-color: $col-background;
+    background-color: map.get($colors, "background");
   }
+  
+  & .leaflet-control {
+    @include frosted-panel();
+    
+    & a.leaflet-control-zoom-in {
+      @include frosted-panel-btn();
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+    
+    & a.leaflet-control-zoom-out {
+      @include frosted-panel-btn();
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+  }
+}
+
+#leaflet_map_panel {
+  position: fixed;
+  bottom: 6px;
+  margin: 0;
+  width: 600px;
+  max-width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  @include frosted-panel();
 }

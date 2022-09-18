@@ -38,12 +38,29 @@ info_panel <- tabPanel(
 
 # Map Panel---------------------------------------------------------------------
 
+map_controls <- wellPanel(
+  id = "leaflet_map_panel",
+  h1("Title"),
+  sliderInput(
+    inputId = "map_slider",
+    label = "Year",
+    value = 2020,
+    min = 2000,
+    max = 2020,
+    step = 1,
+    ticks = TRUE,
+    width = "100%",
+    sep = ""
+  )
+)
+
 map_panel <- tabPanel(
   title = "Map",
   leafletOutput(
     "leaflet_map",
     height = "100vh", width = "100vw"
   ),
+  map_controls,
   icon = d_icon("map")
 )
 
