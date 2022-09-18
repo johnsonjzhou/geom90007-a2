@@ -15,7 +15,8 @@ dependencies <- c(
   "leaflet",
   "geojsonio",
   "sp",
-  "glue"
+  "glue",
+  "colorspace"
 )
 
 #' Attempts to load packages and install them if required
