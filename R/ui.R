@@ -51,6 +51,14 @@ map_controls <- wellPanel(
     ticks = TRUE,
     width = "100%",
     sep = ""
+  ),
+  selectInput(
+    inputId = "map_context_selector",
+    label = "Context",
+    choices = list("Stunting", "Overweight"),
+    selected = "Stunting",
+    multiple = FALSE,
+    selectize = FALSE
   )
 )
 

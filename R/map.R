@@ -32,7 +32,7 @@ alpha_palette <- function(hex_col, bins = 1) {
   return(colors)
 }
 
-obesity_pal <- alpha_palette(map_colors$obesity, map_color_bins)
+overweight_pal <- alpha_palette(map_colors$obesity, map_color_bins)
 stunting_pal <- alpha_palette(map_colors$stunting, map_color_bins)
 
 # Map definition---------------------------------------------------------------
@@ -44,20 +44,31 @@ world_geojson <- geojsonio::geojson_read(
 )
 
 #' Handles leaflet rendering functions for the world map
-#' @param highlight_data the dataset used for chloropleth highlighting
-#' @param map_data the base dataset for the world map with spacial information
+#' @param map_data the dataset for the world map with spacial information
+#' @param map_context Stunting or Overweight
+#' @param highlight_col the column name for the data to hilight
 #' @return a leaflet widget
-map_renderer <- function(highlight_data, map_data) {
-  # chloropleth colour palette
+map_renderer <- function(map_data, map_context, highlight_col) {
+  # Pull map_year to highlight
+  highlight_data <- map_data@data %>% pull(highlight_col)
+
+  # Define the colour palette
+  colours <- switch(
+    map_context,
+    "Stunting" = stunting_pal,
+    "Overweight" = overweight_pal
+  )
+
+  # Build chloropleth colour bins
   chloropleth_colors <- colorBin(
-    palette = stunting_pal,
+    palette = colours,
     domain = highlight_data,
     na.color = "#FFFFFF00",
     bins = map_color_bins,
     alpha = TRUE
   )
 
-  # leaflet widget displaying the map_data
+  # Leaflet widget displaying the map_data
   # and overlaid with highlight_data
   map <- map_data %>%
     leaflet(

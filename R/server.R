@@ -8,21 +8,29 @@ library(leaflet)
 
 #' The server function to pass to the shiny dashboard
 server <- function(input, output, session) {
+  #' Provide the current map context
+  current_context <- reactive({
+    return(input$map_context_selector)
+  })
 
-  map_data <- sp::merge(
-    world_geojson, malnutrition_point,
-    by.x = "id", by.y = "iso_code"
-  )
+  #' Filter map data based on context
+  map_data_filter <- reactive({
+    context <- input$map_context_selector
+    map_data <- sp::merge(
+      world_geojson, malnutrition_data(context),
+      by.x = "id", by.y = "iso_code"
+    )
+    return(map_data)
+  })
 
   #' Filter map data based on year slider
   highlight_filter <- reactive({
-    map_year <- paste0("x", input$map_year_slider)
-    highlight_data <- map_data@data %>% pull(map_year)
-    return(highlight_data)
+    year_col <- paste0("x", input$map_year_slider)
+    return(year_col)
   })
 
   #' Render the world map in a leaflet widget
   output$leaflet_map <- renderLeaflet(
-    map_renderer(highlight_filter(), map_data)
+    map_renderer(map_data_filter(), current_context(), highlight_filter())
   )
 }
