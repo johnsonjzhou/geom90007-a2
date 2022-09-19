@@ -37,12 +37,6 @@ stunting_pal <- alpha_palette(map_colors$stunting, map_color_bins)
 
 # Map definition---------------------------------------------------------------
 
-#' Load the world map spacial data from a geojson file
-world_geojson <- geojsonio::geojson_read(
-  "./data/countries.geo.json",
-  what = "sp"
-)
-
 #' Handles leaflet rendering functions for the world map
 #' @param map_data the dataset for the world map with spacial information
 #' @param map_context Stunting or Overweight

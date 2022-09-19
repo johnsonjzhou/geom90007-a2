@@ -16,11 +16,8 @@ server <- function(input, output, session) {
   #' Filter map data based on context
   map_data_filter <- reactive({
     context <- input$map_context_selector
-    map_data <- sp::merge(
-      world_geojson, malnutrition_data(context),
-      by.x = "id", by.y = "iso_code"
-    )
-    return(map_data)
+    spatial_df <- map_data(context)
+    return(spatial_df)
   })
 
   #' Filter map data based on year slider
