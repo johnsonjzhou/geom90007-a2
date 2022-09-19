@@ -42,7 +42,7 @@ map_controls <- wellPanel(
   id = "leaflet_map_panel",
   h1("Title"),
   sliderInput(
-    inputId = "map_slider",
+    inputId = "map_year_slider",
     label = "Year",
     value = 2020,
     min = 2000,
