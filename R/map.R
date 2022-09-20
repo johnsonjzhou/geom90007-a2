@@ -10,9 +10,6 @@ library(colorspace)
 
 # Colour definitions-----------------------------------------------------------
 
-#' Specify the number of color bins used in the chloropleth map
-map_color_bins <- 5
-
 #' Colour theme definitions
 map_colors <- list(
   "background" = "#f4f5f3",
@@ -20,7 +17,7 @@ map_colors <- list(
   "darkgray" = "#79757d",
   "foreground" = "#1a1b19",
   "obesity" = "#65acab",
-  "stunting" = "#fe8a5e"
+  "stunting" = "#fe786e"
 )
 
 #' Generates a colour palette based on specified colour varying in alpha
@@ -32,8 +29,8 @@ alpha_palette <- function(hex_col, bins = 1) {
   return(colors)
 }
 
-overweight_pal <- alpha_palette(map_colors$obesity, map_color_bins)
-stunting_pal <- alpha_palette(map_colors$stunting, map_color_bins)
+overweight_pal <- alpha_palette(map_colors$obesity, 10)
+stunting_pal <- alpha_palette(map_colors$stunting, 10)
 
 # Map definition---------------------------------------------------------------
 
@@ -47,18 +44,25 @@ map_renderer <- function(map_data, map_context, highlight_col) {
   highlight_data <- map_data@data %>% pull(highlight_col)
 
   # Define the colour palette
-  colours <- switch(
+  colors <- switch(
     map_context,
     "Stunting" = stunting_pal,
     "Overweight" = overweight_pal
   )
 
+  # Define the color bins
+  color_bins <- switch(
+    map_context,
+    "Stunting" = c(0, 10, 20, 30, 40, 50, 60, 70),
+    "Overweight" = c(0, 5, 10, 15, 20, 25, 30)
+  )
+
   # Build chloropleth colour bins
   chloropleth_colors <- colorBin(
-    palette = colours,
+    palette = colors,
     domain = highlight_data,
     na.color = "#FFFFFF00",
-    bins = map_color_bins,
+    bins = color_bins,
     alpha = TRUE
   )
 
@@ -91,6 +95,7 @@ map_renderer <- function(map_data, map_context, highlight_col) {
       position = "topright",
       pal = chloropleth_colors,
       values = highlight_data,
+      na.label = "Not available",
       opacity = 1
     )
   return(map)
