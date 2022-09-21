@@ -9,6 +9,7 @@ dependencies <- c(
   "dplyr",
   "janitor",
   "tidyr",
+  "tidyselect",
   "readxl",
   "ggplot2",
   "plotly",
@@ -16,7 +17,8 @@ dependencies <- c(
   "geojsonio",
   "sp",
   "glue",
-  "colorspace"
+  "colorspace",
+  "htmltools"
 )
 
 #' Attempts to load packages and install them if required

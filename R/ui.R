@@ -44,8 +44,8 @@ map_controls <- wellPanel(
   sliderInput(
     inputId = "map_year_slider",
     label = "Year",
-    value = 2020,
-    min = 2000,
+    value = 2001,
+    min = 2001,
     max = 2020,
     step = 1,
     ticks = TRUE,

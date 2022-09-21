@@ -21,13 +21,14 @@ server <- function(input, output, session) {
   })
 
   #' Filter map data based on year slider
-  highlight_filter <- reactive({
-    year_col <- paste0("x", input$map_year_slider)
-    return(year_col)
+  year_filter <- reactive({
+    # year_col <- paste0("prop_", input$map_year_slider)
+    # return(year_col)
+    return(input$map_year_slider)
   })
 
   #' Render the world map in a leaflet widget
   output$leaflet_map <- renderLeaflet(
-    map_renderer(map_data_filter(), current_context(), highlight_filter())
+    map_renderer(map_data_filter(), current_context(), year_filter())
   )
 }

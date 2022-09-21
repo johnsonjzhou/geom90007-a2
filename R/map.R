@@ -6,6 +6,8 @@ library(dplyr)
 library(leaflet)
 library(sp)
 library(colorspace)
+library(glue)
+library(htmltools)
 
 
 # Colour definitions-----------------------------------------------------------
@@ -37,11 +39,26 @@ stunting_pal <- alpha_palette(map_colors$stunting, 10)
 #' Handles leaflet rendering functions for the world map
 #' @param map_data the dataset for the world map with spacial information
 #' @param map_context Stunting or Overweight
-#' @param highlight_col the column name for the data to hilight
+#' @param year the year to highlight data
 #' @return a leaflet widget
-map_renderer <- function(map_data, map_context, highlight_col) {
-  # Pull map_year to highlight
-  highlight_data <- map_data@data %>% pull(highlight_col)
+map_renderer <- function(map_data, map_context, year) {
+  # Isolate year_data from map_data
+  year_data <- map_data@data %>%
+    select("id", "country_and_areas", ends_with(paste0("", year))) %>%
+    rename_with(
+      ~ gsub(paste0("", year), "", .),
+      everything()
+    )
+
+  # Hover labels
+  #! work in progress
+  year_data$label <-
+    paste(
+      glue("<h1 class = 'lab-title'>{year_data$country_and_areas}</h1>"),
+      glue("<b>Numbers affected:</b>: {year_data$x}"),
+      glue("<b>Proportion:</b>: {year_data$prop_}"),
+      sep = "<br>"
+    )
 
   # Define the colour palette
   colors <- switch(
@@ -50,19 +67,12 @@ map_renderer <- function(map_data, map_context, highlight_col) {
     "Overweight" = overweight_pal
   )
 
-  # Define the color bins
-  color_bins <- switch(
-    map_context,
-    "Stunting" = c(0, 10, 20, 30, 40, 50, 60, 70),
-    "Overweight" = c(0, 5, 10, 15, 20, 25, 30)
-  )
-
   # Build chloropleth colour bins
   chloropleth_colors <- colorBin(
     palette = colors,
-    domain = highlight_data,
+    domain = year_data$prop_,
     na.color = "#FFFFFF00",
-    bins = color_bins,
+    bins = 5,
     alpha = TRUE
   )
 
@@ -87,14 +97,14 @@ map_renderer <- function(map_data, map_context, highlight_col) {
     ) %>%
     addPolygons(
       weight = 0,
-      fillColor = ~ chloropleth_colors(highlight_data),
+      fillColor = ~ chloropleth_colors(year_data$prop_),
       fillOpacity = 1,
-      label = ~ x2020
+      label = lapply(year_data$label, HTML)
     ) %>%
     addLegend(
       position = "topright",
       pal = chloropleth_colors,
-      values = highlight_data,
+      values = year_data$prop_,
       na.label = "Not available",
       opacity = 1
     )
