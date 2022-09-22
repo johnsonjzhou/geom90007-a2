@@ -106,6 +106,7 @@ map_renderer <- function(map_data, map_context, year, zoom = 1) {
   # Leaflet widget displaying the map_data
   # and overlaid with highlight_data
   map <- map_data %>%
+    # Initialise leaflet
     leaflet(
       options = leafletOptions(
         minZoom = 3,
@@ -116,25 +117,29 @@ map_renderer <- function(map_data, map_context, year, zoom = 1) {
         defaultHeight = "100%"
       )
     ) %>%
+    # Add base map layer
     addPolygons(
       color = map_colors$darkgray,
       weight = 1,
       fillColor = map_colors$gray,
       fillOpacity = 1,
     ) %>%
+    # Add chloropleth layer
     addPolygons(
       weight = 0,
       fillColor = ~ chloropleth_colors(year_data$prop_),
       fillOpacity = 1,
       label = lapply(year_data$label, HTML)
     ) %>%
+    # Add proportional symbol layer
     addMarkers(
       ~ LON, ~ LAT,
       icon = ~ map_symbol(
         year_data$diff_norm_, zoom = zoom, name = year_data$NAME
       ),
       label = lapply(year_data$label, HTML)
-  ) %>%
+    ) %>%
+    # Add legend
     addLegend(
       position = "topright",
       pal = chloropleth_colors,
