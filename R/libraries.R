@@ -14,7 +14,7 @@ dependencies <- c(
   "ggplot2",
   "plotly",
   "leaflet",
-  "geojsonio",
+  "rworldmap",
   "sp",
   "glue",
   "colorspace",

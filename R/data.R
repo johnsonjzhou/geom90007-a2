@@ -6,6 +6,7 @@ library(dplyr)
 library(tidyr)
 library(janitor)
 library(tidyselect)
+library(rworldmap)
 
 #' Load data from either excel file or csv
 #' @param filename the filename for the file to be loaded
@@ -118,19 +119,16 @@ malnutrition_data <- function(context) {
   return(df_insights)
 }
 
-#' Load the world map spacial data from a geojson file
-world_geojson <- geojsonio::geojson_read(
-  "./data/countries.geo.json",
-  what = "sp"
-)
-
 #' Generates map data by merging spatial polygons with data
 #' @param context Stunting or Overweight
 #' @return a dataframe with spatial information
 map_data <- function(context) {
+  # Import world map
+  world_map <- rworldmap::getMap()
+  # Add data
   spatial_df <- sp::merge(
-    world_geojson, malnutrition_data(context),
-    by.x = "id", by.y = "iso_code"
+    world_map, malnutrition_data(context),
+    by.x = "ISO_A3", by.y = "iso_code"
   )
   return(spatial_df)
 }
