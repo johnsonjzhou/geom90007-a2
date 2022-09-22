@@ -81,7 +81,8 @@ map_renderer <- function(map_data, map_context, year, zoom = 1) {
     )
     size <- ifelse(
       class == "sym_flat", 0,
-      (zoom * (sizes[1] + (sizes[2] * abs(ratio)))))
+      (zoom * (sizes[1] + (sizes[2] * abs(ratio))))
+    )
     icon <- makeIcon(img, NULL, size, size, className = glue("{class} {name}"))
     return(icon)
   }
