@@ -41,10 +41,10 @@ stunting_pal <- alpha_palette(map_colors$stunting, 10)
 #' @param map_context Stunting or Overweight
 #' @param year the year to highlight data
 #' @return a leaflet widget
-map_renderer <- function(map_data, map_context, year) {
+map_renderer <- function(map_data, map_context, year, zoom = 1) {
   # Isolate year_data from map_data
   year_data <- map_data@data %>%
-    select("id", "country_and_areas", ends_with(paste0("", year))) %>%
+    select("ISO_A3", "NAME", ends_with(paste0("", year))) %>%
     rename_with(
       ~ gsub(paste0("", year), "", .),
       everything()
@@ -54,11 +54,37 @@ map_renderer <- function(map_data, map_context, year) {
   #! work in progress
   year_data$label <-
     paste(
-      glue("<h1 class = 'lab-title'>{year_data$country_and_areas}</h1>"),
+      glue("<h1 class = 'lab-title'>{year_data$NAME}</h1>"),
       glue("<b>Numbers affected:</b>: {year_data$x}"),
       glue("<b>Proportion:</b>: {year_data$prop_}"),
       sep = "<br>"
     )
+
+  #' Generates a proportional symbol
+  #' @param ratio a normalised ratio range [-1..1]
+  #' @param sizes a vector specifying symbol size range c(min, max)
+  #' @param zoom the map zoom level
+  #' @param name the name of the region/country
+  #' @return icon
+  map_symbol <- function(ratio, sizes = c(8, 24), zoom = 1, name = "") {
+    class <- case_when(
+      ratio < 0 ~ "sym_down",
+      ratio > 0 ~ "sym_up",
+      ratio == 0 ~ "sym_flat",
+      is.na(ratio) ~ "sym_flat"
+    )
+    img <- case_when(
+      ratio < 0 ~ "./www/down.svg",
+      ratio > 0 ~ "./www/up.svg",
+      ratio == 0 ~ "./www/dash.svg",
+      is.na(ratio) ~ "./www/dash.svg",
+    )
+    size <- ifelse(
+      class == "sym_flat", 0,
+      (zoom * (sizes[1] + (sizes[2] * abs(ratio)))))
+    icon <- makeIcon(img, NULL, size, size, className = glue("{class} {name}"))
+    return(icon)
+  }
 
   # Define the colour palette
   colors <- switch(
@@ -101,6 +127,13 @@ map_renderer <- function(map_data, map_context, year) {
       fillOpacity = 1,
       label = lapply(year_data$label, HTML)
     ) %>%
+    addMarkers(
+      ~ LON, ~ LAT,
+      icon = ~ map_symbol(
+        year_data$diff_norm_, zoom = zoom, name = year_data$NAME
+      ),
+      label = lapply(year_data$label, HTML)
+  ) %>%
     addLegend(
       position = "topright",
       pal = chloropleth_colors,

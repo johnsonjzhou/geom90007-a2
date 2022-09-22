@@ -72,11 +72,11 @@ malnutrition_data <- function(context) {
   )) %>%
     select(
       "iso_code",
-      num_range("x", 2001:2020)
+      num_range("x", 2000:2020)
     ) %>%
     rename_with(
       ~ gsub("x", "prop_", .),
-      num_range("x", 2001:2020)
+      num_range("x", 2000:2020)
     )
 
   # Add proportion and insights
@@ -87,32 +87,43 @@ malnutrition_data <- function(context) {
       df_prop,
       by = c("iso_code" = "iso_code")
     ) %>%
-    # Totals of all countries per year
-    # total_{year}
-    mutate(
-      across(
-        num_range("x", 2001:2020),
-        ~ sum(.x, na.rm = TRUE),
-        .names = "{gsub('x', 'total_', .col)}"
-      )
-    ) %>%
-    # Affected in each country normalised
-    # norm_{year}
-    mutate(
-      across(
-        num_range("x", 2001:2020),
-        ~ .x / max(.x) * 100,
-        .names = "{gsub('x', 'norm_', .col)}"
-      )
-    ) %>%
     # Difference in affected versus previous year
     # diff_{year}
     mutate(
       across(
         num_range("x", 2001:2020),
-        # eg. x2001 - x2000
+        # eg. prop_2001 - prop_2000
         ~ .x - get(paste0("x", strtoi(substr(cur_column(), 2, 5)) - 1)),
         .names = "{gsub('x', 'diff_', .col)}"
+      )
+    ) %>%
+    # Affected in each country normalised
+    # diff_norm_{year}
+    mutate(
+      across(
+        num_range("diff_", 2001:2020),
+        ~ .x / (max(abs(.x))),
+        # ~ if_else(.x < 0, -1 * .x / min(.x), .x / max(.x)),
+        .names = "{gsub('diff_', 'diff_norm_', .col)}"
+      )
+    ) %>%
+    # Difference in proportion versus previous year
+    # prop_diff_{year}
+    mutate(
+      across(
+        num_range("prop_", 2001:2020),
+        # eg. prop_2001 - prop_2000
+        ~ .x - get(paste0("prop_", strtoi(substr(cur_column(), 6, 9)) - 1)),
+        .names = "{gsub('prop_', 'prop_diff_', .col)}"
+      )
+    ) %>%
+    # Difference in proportion normalised
+    # prop_diff_norm_{year}
+    mutate(
+      across(
+        num_range("prop_diff_", 2001:2020),
+        ~ if_else(.x < 0, -1 * .x / min(.x), .x / max(.x)),
+        .names = "{gsub('prop_diff_', 'prop_diff_norm_', .col)}"
       )
     )
 
