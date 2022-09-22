@@ -42,9 +42,10 @@ data_tidy <- function(df) {
 #' @return dataframe
 #' @example x{year} numbers affected
 #' @example prop_{year} proportion affected
-#' @example total_{year} total of numbers affected
-#' @example norm_{year} normalised to total numbers affected
-#' @example diff_{year} difference numbers affected from year before
+#' @example diff_{year} difference in numbers affected
+#' @example diff_norm_{year} difference of numbers affected normalised
+#' @example prop_diff_{year} difference in proportion affected
+#' @example prop_diff_norm_{year} difference in proportion affected normalised
 malnutrition_data <- function(context) {
   # Match context to sheet name in the excel file
   # Numbers affected (base)
@@ -92,7 +93,7 @@ malnutrition_data <- function(context) {
     mutate(
       across(
         num_range("x", 2001:2020),
-        # eg. prop_2001 - prop_2000
+        # eg. x2001 - x2000
         ~ .x - get(paste0("x", strtoi(substr(cur_column(), 2, 5)) - 1)),
         .names = "{gsub('x', 'diff_', .col)}"
       )
@@ -103,7 +104,6 @@ malnutrition_data <- function(context) {
       across(
         num_range("diff_", 2001:2020),
         ~ .x / (max(abs(.x))),
-        # ~ if_else(.x < 0, -1 * .x / min(.x), .x / max(.x)),
         .names = "{gsub('diff_', 'diff_norm_', .col)}"
       )
     ) %>%
@@ -122,7 +122,7 @@ malnutrition_data <- function(context) {
     mutate(
       across(
         num_range("prop_diff_", 2001:2020),
-        ~ if_else(.x < 0, -1 * .x / min(.x), .x / max(.x)),
+        ~ .x / (max(abs(.x))),
         .names = "{gsub('prop_diff_', 'prop_diff_norm_', .col)}"
       )
     )
