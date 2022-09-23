@@ -30,6 +30,8 @@ $colors: (
 
 @mixin pill-btn {
   font-family: "Inter";
+  font-weight: 500;
+  height: 28px;
   padding: 3px 12px;
   border-radius: 24px;
   border-color: map.get($colors, "gray");
@@ -122,6 +124,48 @@ $colors: (
       
       .action-button {
         @include pill-btn();
+      }
+      
+      #title_controls {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        
+        * > {
+          margin: 0;
+        }
+        
+        .col-sm-3 {
+          width: 210px;
+          
+          .form-group.shiny-input-container {
+            margin: 0;
+          }
+          
+          #map_context_selector-label {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translate(0, -50%);
+            font-family: "Inter";
+            font-weight: 500;
+            color: map.get($colors, "darkgray");
+          }
+          
+          #map_context_selector {
+            @include pill-btn();
+            padding-left: 70px;
+            font-family: "Inter";
+            font-weight: 500;
+            color: map.get($colors, "foreground");
+            
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
       }
     }
     

@@ -41,9 +41,26 @@ headers <- tags$head(
 title_panel <- tabPanel(
   title = "Title",
   h1("Nutrition and Food Security around the world"),
-  actionButton(
-    inputId = "about_open",
-    label = "Learn"
+  fluidRow(
+    id = "title_controls",
+    column(
+      width = 1,
+      actionButton(
+        inputId = "about_open",
+        label = "About"
+      )
+    ),
+    column(
+      width = 3,
+      selectInput(
+        inputId = "map_context_selector",
+        label = "Burden",
+        choices = list("Stunting", "Overweight"),
+        selected = "Stunting",
+        multiple = FALSE,
+        selectize = FALSE
+      )
+    )
   )
 )
 
@@ -68,18 +85,6 @@ info_panel <- tabPanel(
 
 map_controls <- fluidRow(
   id = "leaflet_map_panel",
-  column(
-    id = "map_context_combo",
-    width = 6,
-    selectInput(
-      inputId = "map_context_selector",
-      label = "Context",
-      choices = list("Stunting", "Overweight"),
-      selected = "Stunting",
-      multiple = FALSE,
-      selectize = FALSE
-    )
-  ),
   column(
     id = "map_year_combo",
     width = 12,
