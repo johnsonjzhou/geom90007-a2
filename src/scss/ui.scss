@@ -4,6 +4,8 @@
  */
 
 $border-radius: 6px;
+$global-padding-y: 20px;
+$global-padding-x: 20px;
 
 $colors: (
   "background": #f4f5f3,
@@ -68,12 +70,69 @@ $colors: (
   }
 }
 
+
+.container {
+  .tab-pane {
+    // Map pane
+    &[data-value="Map"] {
+      display: block;
+      position: fixed;
+      width: calc(100vw - $global-padding-x);
+      height: calc(100vh - 100px);
+      top: calc(50% + 40px);
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+    
+    // Title pane
+    &[data-value="Title"] {
+      display: block;
+      position: fixed;
+      width: calc(100vw - $global-padding-x);
+      top: $global-padding-y;
+      left: 50%;
+      transform: translate(-50%, 0);
+      height: 80px;
+      text-align: center;
+      
+      h1 {
+        margin: 0;
+        font-family: "League Spartan";
+        font-weight: 600;
+        font-size: 30px;
+        text-align: center;
+      }
+      
+      button {
+        font-family: "Inter";
+        padding: 3px 12px;
+        border-radius: 24px;
+        border-color: map.get($colors, "gray");
+        background-color: transparent;
+        color: map.get($colors, "foreground");
+        
+        &:hover {
+          background-color: map.get($colors, "gray")
+        }
+      }
+    }
+    
+    // Other panes, hidden
+    
+    // Other panes, visible
+    &.active {
+      
+    }
+  }
+}
+
 #leaflet_map {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
+  border-radius: calc($border-radius + 2px);
   
   &.leaflet-container{
     background-color: map.get($colors, "background");

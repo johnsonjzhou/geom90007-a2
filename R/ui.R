@@ -16,6 +16,15 @@ d_icon <- function(name) {
 # Header elements--------------------------------------------------------------
 
 headers <- tags$head(
+  # web fonts
+  tags$link(
+    rel = "stylesheet", type = "text/css",
+    href = "https://fonts.googleapis.com/css2?family=Inter"
+  ),
+  tags$link(
+    rel = "stylesheet", type = "text/css",
+    href = "https://fonts.googleapis.com/css2?family=League+Spartan"
+  ),
   # css overrides
   tags$link(
     rel = "stylesheet", type = "text/css",
@@ -71,7 +80,7 @@ map_panel <- tabPanel(
   title = "Map",
   leafletOutput(
     "leaflet_map",
-    height = "100vh", width = "100vw"
+    height = "100%", width = "100%"
   ),
   map_controls,
   icon = d_icon("map")
@@ -84,14 +93,24 @@ nav_menu <- navbarMenu(
   map_panel
 )
 
+title_panel <- tabPanel(
+  title = "Title",
+  h1("Nutrition and Food Security around the world"),
+  actionButton(
+    inputId = "title_about",
+    label = "Learn"
+  )
+)
+
 # UI element-------------------------------------------------------------------
 
 ui <- navbarPage(
-  title = "Food security and nutrition around the world",
-  info_panel,
+  title = "Nutrition and Food Security around the world",
   map_panel,
+  title_panel,
+  info_panel,
   header = headers,
-  windowTitle = "Food security and nutrition around the world",
+  windowTitle = "Nutrition and Food Security around the world",
   fluid = FALSE,
   position = "fixed-top",
   lang = "en"
