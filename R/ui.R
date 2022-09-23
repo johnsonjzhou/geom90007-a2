@@ -66,13 +66,26 @@ info_panel <- tabPanel(
 
 # Map Panel---------------------------------------------------------------------
 
-map_controls <- wellPanel(
+map_controls <- fluidRow(
   id = "leaflet_map_panel",
-  wellPanel(
+  column(
+    id = "map_context_combo",
+    width = 6,
+    selectInput(
+      inputId = "map_context_selector",
+      label = "Context",
+      choices = list("Stunting", "Overweight"),
+      selected = "Stunting",
+      multiple = FALSE,
+      selectize = FALSE
+    )
+  ),
+  column(
     id = "map_year_combo",
+    width = 12,
     plotlyOutput(
       outputId = "yearly_total_plot",
-      width = "100%",
+      width = "550px",
       height = "80px"
     ),
     sliderInput(
@@ -86,30 +99,6 @@ map_controls <- wellPanel(
       width = "100%",
       sep = ""
     ),
-  ),
-  # plotlyOutput(
-  #   outputId = "yearly_total_plot",
-  #   width = "100%",
-  #   height = "80px"
-  # ),
-  # sliderInput(
-  #   inputId = "map_year_slider",
-  #   label = "Year",
-  #   value = 2001,
-  #   min = 2001,
-  #   max = 2020,
-  #   step = 1,
-  #   ticks = TRUE,
-  #   width = "100%",
-  #   sep = ""
-  # ),
-  selectInput(
-    inputId = "map_context_selector",
-    label = "Context",
-    choices = list("Stunting", "Overweight"),
-    selected = "Stunting",
-    multiple = FALSE,
-    selectize = FALSE
   )
 )
 

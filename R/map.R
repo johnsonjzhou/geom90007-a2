@@ -31,17 +31,45 @@ alpha_palette <- function(hex_col, bins = 1) {
   return(colors)
 }
 
-overweight_pal <- alpha_palette(map_colors$obesity, 10)
-stunting_pal <- alpha_palette(map_colors$stunting, 10)
-
 # Map definition---------------------------------------------------------------
+
+#' Generates a proportional symbol
+#' @param ratio a normalised ratio range [-1..1]
+#' @param sizes a vector specifying symbol size range c(min, max)
+#' @param zoom the map zoom level
+#' @param name the name of the region/country
+#' @return icon
+map_symbol <- function(ratio, sizes = c(8, 24), zoom = 1, name = "") {
+  class <- case_when(
+    ratio < 0 ~ "sym_down",
+    ratio > 0 ~ "sym_up",
+    ratio == 0 ~ "sym_flat",
+    is.na(ratio) ~ "sym_flat"
+  )
+  img <- case_when(
+    ratio < 0 ~ "./www/down.svg",
+    ratio > 0 ~ "./www/up.svg",
+    ratio == 0 ~ "./www/dash.svg",
+    is.na(ratio) ~ "./www/dash.svg",
+  )
+  size <- ifelse(
+    class == "sym_flat", 0,
+    (zoom * (sizes[1] + (sizes[2] * abs(ratio))))
+  )
+  icon <- makeIcon(img, NULL, size, size, className = glue("{class} {name}"))
+  return(icon)
+}
 
 #' Handles leaflet rendering functions for the world map
 #' @param map_data the dataset for the world map with spacial information
-#' @param map_context Stunting or Overweight
-#' @param year the year to highlight data
+#' @param state the reactive "state" object
 #' @return a leaflet widget
-map_renderer <- function(map_data, map_context, year, zoom = 1) {
+map_renderer <- function(map_data, state) {
+  # Get state parameters
+  year <- state$year
+  context_color <- state$context_color
+  zoom <- 1
+
   # Isolate year_data from map_data
   year_data <- map_data@data %>%
     select("ISO_A3", "NAME", ends_with(paste0("", year))) %>%
@@ -60,39 +88,8 @@ map_renderer <- function(map_data, map_context, year, zoom = 1) {
       sep = "<br>"
     )
 
-  #' Generates a proportional symbol
-  #' @param ratio a normalised ratio range [-1..1]
-  #' @param sizes a vector specifying symbol size range c(min, max)
-  #' @param zoom the map zoom level
-  #' @param name the name of the region/country
-  #' @return icon
-  map_symbol <- function(ratio, sizes = c(8, 24), zoom = 1, name = "") {
-    class <- case_when(
-      ratio < 0 ~ "sym_down",
-      ratio > 0 ~ "sym_up",
-      ratio == 0 ~ "sym_flat",
-      is.na(ratio) ~ "sym_flat"
-    )
-    img <- case_when(
-      ratio < 0 ~ "./www/down.svg",
-      ratio > 0 ~ "./www/up.svg",
-      ratio == 0 ~ "./www/dash.svg",
-      is.na(ratio) ~ "./www/dash.svg",
-    )
-    size <- ifelse(
-      class == "sym_flat", 0,
-      (zoom * (sizes[1] + (sizes[2] * abs(ratio))))
-    )
-    icon <- makeIcon(img, NULL, size, size, className = glue("{class} {name}"))
-    return(icon)
-  }
-
   # Define the colour palette
-  colors <- switch(
-    map_context,
-    "Stunting" = stunting_pal,
-    "Overweight" = overweight_pal
-  )
+  colors <- alpha_palette(context_color, 10)
 
   # Build chloropleth colour bins
   chloropleth_colors <- colorBin(

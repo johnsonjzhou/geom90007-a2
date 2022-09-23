@@ -6,14 +6,16 @@ library(plotly)
 
 #' Handles plo rendering functions for the world map
 #' @param map_data the dataset for the world map with spacial information
-#' @param map_context Stunting or Overweight
-#' @param year the year to highlight data
+#' @param state the "state" reactive object
 #' @return a leaflet widget
-yearly_total_plot <- function(map_data, map_context, year) {
+yearly_total_plot <- function(map_data, state) {
+  # Unpack state variables
+  context_color <- state$context_color
+
   # Define colors to be used
   plot_colors <- adjust_transparency(
     # c(fill area, line, gridlines)
-    "#210ced", c(0.1, 1, 0.2)
+    context_color, c(0.1, 1, 0.2)
   )
 
   # Tooltip template
@@ -48,6 +50,7 @@ yearly_total_plot <- function(map_data, map_context, year) {
     ) %>%
     plotly::config(.,
       displayModeBar = FALSE,
+      scrollZoom = FALSE,
       frameMargins = 0,
       scrollZoom = FALSE,
       doubleClick = FALSE,

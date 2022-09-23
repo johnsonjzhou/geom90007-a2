@@ -34,10 +34,63 @@
 #leaflet_map_panel {
   position: fixed;
   bottom: 6px;
-  margin: 0;
-  width: 600px;
+  padding: 20px;
   max-width: 90%;
   left: 50%;
   transform: translateX(-50%);
   @include frosted-panel();
+  display: flex;
+  
+  #map_context_combo {
+    
+  }
+  
+  #map_year_combo {
+    --plot-width: 550px;
+    --plot-height: 80px;
+    position: relative;
+    width: calc(var(--plot-width) + 20px);
+    padding: 0;
+    flex-shrink: 0;
+    
+    #yearly_total_plot {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      height: var(--plot-height);
+      width: var(--plot-width);
+      // height: 80px, set via ui.R
+      // width: 550px, set via ui.R
+    }
+    
+    .form-group.shiny-input-container {
+      margin-top: 30px;
+      
+      // knob
+      .irs-handle.single {
+        @include frosted-panel();
+        background-color: rgba(255,255,255,0.9);
+        box-shadow: 1px 1px 4px rgba(map.get($colors, "darkgray"), 0.6);
+      }
+      
+      // track
+      .irs-line {
+        @include frosted-panel();
+      }
+      
+      // min/max indicators
+      .irs-max, .irs-min {
+        @include frosted-panel();
+      }
+      
+      // track indicator
+      .irs-bar.irs-bar--single {
+        @include frosted-panel();
+        background: linear-gradient(
+          90deg, rgba(#FFFFFF, 0.9) 0%,
+          map.get($colors, "background-frost") 100%
+        );
+      }
+    }
+  }
 }

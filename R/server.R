@@ -20,34 +20,40 @@ server <- function(input, output, session) {
     session$sendCustomMessage(type = "about_close", message = "close")
   })
 
-  #' Mapping -----------------------------------------------------------------
-  
-  #' Provide the current map context
-  current_context <- reactive({
-    return(input$map_context_selector)
+  #' State -------------------------------------------------------------------
+
+  #' Reactive states
+  state <- reactiveValues()
+  state$map_context <- "Stunting"
+  state$map_colors <- list(
+    "Overweight" = "#e28a2e",
+    "Stunting" = "#65acab"
+  )
+  state$context_color <- "#65acab"
+  state$year <- "2001"
+
+  #' Observe states
+  observe({
+    state$year <- input$map_year_slider
+    state$map_context <- input$map_context_selector
+    state$context_color <- state$map_colors[state$map_context]
   })
+
+  #' Mapping -----------------------------------------------------------------
 
   #' Filter map data based on context
   map_data_filter <- reactive({
-    context <- input$map_context_selector
-    spatial_df <- map_data(context)
+    spatial_df <- map_data(state$map_context)
     return(spatial_df)
-  })
-
-  #' Filter map data based on year slider
-  year_filter <- reactive({
-    # year_col <- paste0("prop_", input$map_year_slider)
-    # return(year_col)
-    return(input$map_year_slider)
   })
 
   #' Render the world map in a leaflet widget
   output$leaflet_map <- renderLeaflet(
-    map_renderer(map_data_filter(), current_context(), year_filter())
+    map_renderer(map_data_filter(), state)
   )
   
   #' Render a plot of yearly totals
   output$yearly_total_plot <- renderPlotly(
-    yearly_total_plot(map_data_filter(), current_context(), year_filter())
+    yearly_total_plot(map_data_filter(), state)
   )
 }
