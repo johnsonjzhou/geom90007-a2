@@ -1,2 +1,2 @@
-(()=>{"use strict";window.onload=function(){navigator.userAgent.includes("QtWebEngine")&&window.alert("For best effect, please use an external browser.")}})();
+(()=>{"use strict";Shiny.addCustomMessageHandler("about_open",(function(e){document.querySelector("[data-value='About'].tab-pane").classList.add("active")})),Shiny.addCustomMessageHandler("about_close",(function(e){document.querySelector("[data-value='About'].tab-pane").classList.remove("active")})),window.onload=function(){navigator.userAgent.includes("QtWebEngine")&&window.alert("For best effect, please use an external browser.")}})();
 //# sourceMappingURL=shiny_app.js.map

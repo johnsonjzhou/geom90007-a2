@@ -9,6 +9,19 @@ library(plotly)
 
 #' The server function to pass to the shiny dashboard
 server <- function(input, output, session) {
+  #' Event handlers ----------------------------------------------------------
+
+  # About page revealer
+  observeEvent(input$about_open, {
+    session$sendCustomMessage(type = "about_open", message = "open")
+  })
+
+  observeEvent(input$about_close, {
+    session$sendCustomMessage(type = "about_close", message = "close")
+  })
+
+  #' Mapping -----------------------------------------------------------------
+  
   #' Provide the current map context
   current_context <- reactive({
     return(input$map_context_selector)

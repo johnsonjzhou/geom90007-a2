@@ -36,11 +36,26 @@ headers <- tags$head(
   )
 )
 
+# Title Panel------------------------------------------------------------------
+
+title_panel <- tabPanel(
+  title = "Title",
+  h1("Nutrition and Food Security around the world"),
+  actionButton(
+    inputId = "about_open",
+    label = "Learn"
+  )
+)
+
 # Info Panel-------------------------------------------------------------------
 
 info_panel <- tabPanel(
-  title = "Info",
-  h1("Food security and nutrition around the world"),
+  title = "About",
+  actionButton(
+    inputId = "about_close",
+    label = "Close"
+  ),
+  h1("Nutrition and Food Security around the world"),
   p("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
   icon = d_icon("circle-info")
 )
@@ -91,15 +106,6 @@ map_panel <- tabPanel(
 nav_menu <- navbarMenu(
   info_panel,
   map_panel
-)
-
-title_panel <- tabPanel(
-  title = "Title",
-  h1("Nutrition and Food Security around the world"),
-  actionButton(
-    inputId = "title_about",
-    label = "Learn"
-  )
 )
 
 # UI element-------------------------------------------------------------------
