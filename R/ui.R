@@ -47,6 +47,10 @@ title_panel <- tabPanel(
   )
 )
 
+dimmer_panel <- tabPanel(
+  title = "Dimmer"
+)
+
 # Info Panel-------------------------------------------------------------------
 
 info_panel <- tabPanel(
@@ -114,6 +118,7 @@ ui <- navbarPage(
   title = "Nutrition and Food Security around the world",
   map_panel,
   title_panel,
+  dimmer_panel,
   info_panel,
   header = headers,
   windowTitle = "Nutrition and Food Security around the world",

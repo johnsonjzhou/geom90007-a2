@@ -18,7 +18,7 @@ $colors: (
 @mixin frosted-panel {
   background-color: map.get($colors, "background-frost");
   backdrop-filter: saturate(180%) blur(20px);
-  border-radius: $border-radius;
+  border-radius: calc($border-radius + 4px);
   border: 0;
   box-shadow: none;
 }
@@ -26,6 +26,20 @@ $colors: (
 @mixin frosted-panel-btn {
   background-color: rgba(255,255,255,0.9);
   backdrop-filter: saturate(180%) brightness(150%) blur(5px);
+}
+
+@mixin pill-btn {
+  font-family: "Inter";
+  padding: 3px 12px;
+  border-radius: 24px;
+  border-color: map.get($colors, "gray");
+  background-color: transparent;
+  color: map.get($colors, "foreground");
+  transition: 0.2s ease;
+  
+  &:hover {
+    background-color: map.get($colors, "gray")
+  }
 }
 
 .navbar {
@@ -104,25 +118,59 @@ $colors: (
         text-align: center;
       }
       
-      button {
-        font-family: "Inter";
-        padding: 3px 12px;
-        border-radius: 24px;
-        border-color: map.get($colors, "gray");
-        background-color: transparent;
-        color: map.get($colors, "foreground");
-        
-        &:hover {
-          background-color: map.get($colors, "gray")
-        }
+      .action-button {
+        @include pill-btn();
+      }
+    }
+    
+    // Dimmer pane, for visual effects
+    &[data-value="Dimmer"] {
+      background-color: rgba(map.get($colors, "darkgray"), 0.3);
+      backdrop-filter: saturate(180%) blur(8px);
+      opacity: 0;
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      z-index: -10;
+      transition: 0.2s ease;
+      
+      &.dim {
+        z-index:10;
+        opacity: 1;
       }
     }
     
     // Other panes, hidden
-    
-    // Other panes, visible
-    &.active {
+    &:not([data-value="Map"]):not([data-value="Title"]):not([data-value="Dimmer"]) {
+      @include frosted-panel();
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      width: 600px;
+      max-height: calc(100vh - 100px);
+      transform: translate3d(-50%, 70vh, 0) scale(1.05);
+      display: block;
+      opacity: 0;
+      padding: 30px 15px;
+      text-align: center;
+      transition: opacity 0.15s ease, transform 0.5s ease-out;
       
+      .action-button {
+        @include pill-btn();
+        @include frosted-panel-btn();
+      }
+      
+      // Other panes, visible
+      &.active {
+        transform: translate3d(-50%, 0, 0) scale(1.05);
+        opacity: 1;
+        z-index: 20;
+        transition: opacity 0.3s ease, transform 0.1s ease;
+      }
     }
   }
 }
