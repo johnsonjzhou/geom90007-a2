@@ -68,23 +68,41 @@ info_panel <- tabPanel(
 
 map_controls <- wellPanel(
   id = "leaflet_map_panel",
-  h1("Title"),
-  plotlyOutput(
-    outputId = "yearly_total_plot",
-    width = "100%",
-    height = "80px"
+  wellPanel(
+    id = "map_year_combo",
+    plotlyOutput(
+      outputId = "yearly_total_plot",
+      width = "100%",
+      height = "80px"
+    ),
+    sliderInput(
+      inputId = "map_year_slider",
+      label = "Year",
+      value = 2001,
+      min = 2001,
+      max = 2020,
+      step = 1,
+      ticks = TRUE,
+      width = "100%",
+      sep = ""
+    ),
   ),
-  sliderInput(
-    inputId = "map_year_slider",
-    label = "Year",
-    value = 2001,
-    min = 2001,
-    max = 2020,
-    step = 1,
-    ticks = TRUE,
-    width = "100%",
-    sep = ""
-  ),
+  # plotlyOutput(
+  #   outputId = "yearly_total_plot",
+  #   width = "100%",
+  #   height = "80px"
+  # ),
+  # sliderInput(
+  #   inputId = "map_year_slider",
+  #   label = "Year",
+  #   value = 2001,
+  #   min = 2001,
+  #   max = 2020,
+  #   step = 1,
+  #   ticks = TRUE,
+  #   width = "100%",
+  #   sep = ""
+  # ),
   selectInput(
     inputId = "map_context_selector",
     label = "Context",
