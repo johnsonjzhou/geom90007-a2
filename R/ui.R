@@ -41,6 +41,11 @@ info_panel <- tabPanel(
 map_controls <- wellPanel(
   id = "leaflet_map_panel",
   h1("Title"),
+  plotlyOutput(
+    outputId = "yearly_total_plot",
+    width = "100%",
+    height = "80px"
+  ),
   sliderInput(
     inputId = "map_year_slider",
     label = "Year",

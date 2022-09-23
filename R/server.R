@@ -5,6 +5,7 @@
 library(dplyr)
 library(shiny)
 library(leaflet)
+library(plotly)
 
 #' The server function to pass to the shiny dashboard
 server <- function(input, output, session) {
@@ -30,5 +31,10 @@ server <- function(input, output, session) {
   #' Render the world map in a leaflet widget
   output$leaflet_map <- renderLeaflet(
     map_renderer(map_data_filter(), current_context(), year_filter())
+  )
+  
+  #' Render a plot of yearly totals
+  output$yearly_total_plot <- renderPlotly(
+    yearly_total_plot(map_data_filter(), current_context(), year_filter())
   )
 }
