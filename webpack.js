@@ -2,8 +2,16 @@
 const webpack = require("webpack");
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const copyFiles = [
+  {
+    from: 'src/img/*.*',
+    to: '[name].[ext]'
+  }
+];
 
 module.exports = {
   entry: {
@@ -55,6 +63,10 @@ module.exports = {
     }),
     // minify CSS
     new MiniCssExtractPlugin(),
+    // static copy of files
+    new CopyPlugin({
+      patterns: copyFiles
+    }), 
     // clean up
     new RemoveEmptyScriptsPlugin(),
   ]
