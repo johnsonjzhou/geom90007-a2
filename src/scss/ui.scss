@@ -35,6 +35,7 @@ $colors: (
   transform: translateX(-50%);
   margin: 0;
   min-height: auto;
+  display: none;
   
   &.navbar-default {
     width: fit-content;
@@ -132,7 +133,7 @@ $colors: (
   height: 100%;
   top: 0;
   left: 0;
-  border-radius: calc($border-radius + 2px);
+  border-radius: calc($border-radius + 4px);
   
   &.leaflet-container{
     background-color: map.get($colors, "background");

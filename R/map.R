@@ -14,12 +14,12 @@ library(htmltools)
 
 #' Colour theme definitions
 map_colors <- list(
-  "background" = "#f4f5f3",
+  "background" = "#f5f3ec",
   "gray" = "#e7e5e6",
   "darkgray" = "#79757d",
   "foreground" = "#1a1b19",
-  "obesity" = "#65acab",
-  "stunting" = "#fe786e"
+  "obesity" = "#e28a2e",
+  "stunting" = "#65acab"
 )
 
 #' Generates a colour palette based on specified colour varying in alpha
