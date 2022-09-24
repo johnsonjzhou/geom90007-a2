@@ -20,9 +20,22 @@ server <- function(input, output, session) {
     session$sendCustomMessage(type = "about_close", message = "close")
   })
 
+  #' Observe map clicks and reveal Details page
+  observeEvent(input$leaflet_map_shape_click, {
+    # set the country code based on map click
+    state$country <- input$leaflet_map_shape_click$id
+    state$country_name <- get_country_name()
+    # trigger message to the frontend
+    session$sendCustomMessage(type = "detail_open", message = "open")
+  })
+
+  observeEvent(input$detail_close, {
+    session$sendCustomMessage(type = "detail_close", message = "close")
+  })
+
   #' State -------------------------------------------------------------------
 
-  #' Reactive states
+  #' Reactive states and settable defaults
   state <- reactiveValues()
   state$ui_colors <- list(
     "background" = "#f5f3ec",
@@ -35,13 +48,19 @@ server <- function(input, output, session) {
     "secondary" = "'Inter', 'Helvetica', 'Arial', sans-serif",
     "monospace" = "'JetBrains Mono', monospace"
   )
-  state$map_context <- "Stunting"
   state$map_colors <- list(
     "Overweight" = "#e28a2e",
     "Stunting" = "#65acab"
   )
+  state$radar_colors <- list(
+    "past" = "#fec201",
+    "latest" = "#88e5bd"
+  )
+  state$map_context <- "Stunting"
   state$context_color <- "#65acab"
   state$year <- "2001"
+  state$country <- ""
+  state$country_name <- ""
 
   #' Observe states
   observe({
@@ -62,9 +81,39 @@ server <- function(input, output, session) {
   output$leaflet_map <- renderLeaflet(
     map_renderer(map_data_filter(), state)
   )
-  
+
   #' Render a plot of yearly totals
   output$yearly_total_plot <- renderPlotly(
     yearly_total_plot(map_data_filter(), state)
+  )
+
+  #' Polar plot --------------------------------------------------------------
+
+  #' Provides data for the indicators polar plot
+  detail_data <- data_loader("./data/indicators.xlsx", sheet = "data")
+  # detail_data <- function() {
+  #   return(data_loader("./data/indicators.xlsx", sheet = "data"))
+  # }
+
+  get_country_name <- function() {
+    # Unpack state parameters
+    country_code <- state$country
+
+    # Get country name from data
+    country_name <- detail_data %>%
+      filter(iso_3 == !!country_code) %>%
+      pull(country)
+
+    return(country_name)
+  }
+
+  #' Renders detailed indicators as a polar radial plot
+  output$details_plot <- renderPlotly(
+    indicators_radar_plot(detail_data, state)
+  )
+  
+  #' Renders a heading based on the currently selected country in state
+  output$country_heading <- renderUI(
+    render_detail_header(state)
   )
 }

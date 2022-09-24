@@ -114,6 +114,7 @@ map_renderer <- function(map_data, state) {
     ) %>%
     # Add chloropleth layer
     addPolygons(
+      layerId = ~ ISO_A3,
       weight = 0,
       fillColor = ~ chloropleth_colors(year_data$prop_),
       fillOpacity = 1,

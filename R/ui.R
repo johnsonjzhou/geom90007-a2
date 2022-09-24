@@ -3,6 +3,8 @@
 # @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 library(shiny)
+library(glue)
+library(htmltools)
 
 # Utilities--------------------------------------------------------------------
 
@@ -119,12 +121,46 @@ map_panel <- tabPanel(
   icon = d_icon("map")
 )
 
-# Navigation bar---------------------------------------------------------------
+# Details panel----------------------------------------------------------------
 
-nav_menu <- navbarMenu(
-  info_panel,
-  map_panel
+detail_panel <- tabPanel(
+  title = "Detail",
+  actionButton(
+    inputId = "detail_close",
+    label = "Close"
+  ),
+  htmlOutput(
+    outputId = "country_heading"
+  ),
+  plotlyOutput(
+    outputId = "details_plot",
+    # 600px - 30px padding
+    width = "570px",
+    height = "570px"
+  )
 )
+
+#' Renders a country name header based on state, to be called in server
+#' @param state the "state" reactive object
+#' @return a htmltools::tags object
+render_detail_header <- function(state) {
+  # Unpack state parameters
+  country_name <- state$country_name
+
+  # Error message if country name could not be found
+  if (length(nchar(country_name)) < 1) {
+    return(tags$div(
+      h1("Country not found"),
+      p(glue(
+        "The selected country code cannot be located in the dataset."
+      )),
+      br()
+    ))
+  }
+
+  # Return the header with country name
+  return(tags$h1(country_name))
+}
 
 # UI element-------------------------------------------------------------------
 
@@ -134,6 +170,7 @@ ui <- navbarPage(
   title_panel,
   dimmer_panel,
   info_panel,
+  detail_panel,
   header = headers,
   windowTitle = "Nutrition and Food Security around the world",
   fluid = FALSE,
