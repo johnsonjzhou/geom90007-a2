@@ -21,6 +21,7 @@ $colors: (
 @mixin frosted-panel {
   background-color: map.get($colors, "background-frost");
   backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-radius: calc($border-radius + 4px);
   border: 0;
   box-shadow: none;
@@ -29,6 +30,7 @@ $colors: (
 @mixin frosted-panel-btn {
   background-color: rgba(255,255,255,0.9);
   backdrop-filter: saturate(180%) brightness(150%) blur(5px);
+  -webkit-backdrop-filter: saturate(180%) brightness(150%) blur(5px);
 }
 
 @mixin pill-btn {
@@ -182,6 +184,7 @@ html {
             font-family: $font-secondary;
             font-weight: 500;
             color: map.get($colors, "foreground");
+            -webkit-appearance: none;
             
             &:focus {
               box-shadow: none;
@@ -195,6 +198,7 @@ html {
     &[data-value="Dimmer"] {
       background-color: rgba(map.get($colors, "darkgray"), 0.3);
       backdrop-filter: saturate(180%) blur(8px);
+      -webkit-backdrop-filter: saturate(180%) blur(8px);
       opacity: 0;
       content: "";
       display: block;
