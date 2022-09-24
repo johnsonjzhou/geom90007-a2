@@ -19,11 +19,13 @@ headers <- tags$head(
   # web fonts
   tags$link(
     rel = "stylesheet", type = "text/css",
-    href = "https://fonts.googleapis.com/css2?family=Inter"
-  ),
-  tags$link(
-    rel = "stylesheet", type = "text/css",
-    href = "https://fonts.googleapis.com/css2?family=League+Spartan"
+    href = paste0(
+      "https://fonts.googleapis.com/css2?",
+      "family=Inter:wght@400;500;600",
+      "&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600",
+      "&family=League+Spartan:wght@500;600",
+      "&display=swap"
+    )
   ),
   # css overrides
   tags$link(
