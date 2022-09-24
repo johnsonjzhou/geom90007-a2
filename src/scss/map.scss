@@ -71,6 +71,42 @@
       display: none;
     }
   }
+  
+  .leaflet-pane {
+    // Tooltip pane
+    &.leaflet-tooltip-pane {
+      .leaflet-tooltip {
+        @include frosted-panel();
+        // backdrop filter only works on Chrome at this stage
+        // as .leaflet-tooltip-pane is 0x0 position absolute
+        // thus adjusting the opacity to compensate
+        background-color: rgba(map.get($colors, "background"), 0.9);
+        box-shadow: 6px 6px 20px rgba(100,100,100,0.3);
+        font-size: 10px;
+        padding: 10px;
+        
+        & h1 {
+          font-family: $font-secondary;
+          font-size: 14px;
+          margin: 0;
+        }
+        
+        & b {
+          font-weight: 600;
+        }
+        
+        & i {
+          font-style: normal;
+          font-family: $font-monospace;
+          font-weight: 400;
+        }
+        
+        &:before, &:after {
+          content: none;
+        }
+      }
+    }
+  }
 }
 
 #leaflet_map_panel {

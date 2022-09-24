@@ -68,16 +68,31 @@ map_renderer <- function(map_data, state) {
       ~ gsub(paste0("", year), "", .),
       everything()
     )
+  View(year_data)
 
   # Hover labels
   #! work in progress
-  year_data$label <-
-    paste(
-      glue("<h1 class = 'lab-title'>{year_data$NAME}</h1>"),
-      glue("<b>Numbers affected:</b>: {year_data$x}"),
-      glue("<b>Proportion:</b>: {year_data$prop_}"),
-      sep = "<br>"
-    )
+  label_data <- list(
+    prev = year_data$prop_,
+    num = year_data$x,
+    prop = round(year_data$norm_ * 100, digits = 1),
+    chng = round(year_data$diff_, digits = 1)
+  )
+  year_data$label <- paste(
+    glue("<h1>{year_data$NAME}</h1>"),
+    case_when(
+      (!is.na(year_data$prop_) & !is.na(year_data$x))
+        ~ paste(
+          glue("<b>Prevalence:</b>: <i>{label_data$prev}%</i>"),
+          glue("<b>Number of children:</b>: <i>{label_data$num}k</i>"),
+          glue("<b>Proportion of all affected:</b>: <i>{label_data$prop}%</i>"),
+          glue("<b>Change from previous year:</b>: <i>{label_data$chng}k</i>"),
+          sep = "<br>"
+        ),
+      TRUE ~ "<i>No data to display</i>"
+    ),
+    sep = "<br>"
+  )
 
   # Define the colour palette
   colors <- alpha_palette(context_color, 10)

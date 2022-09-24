@@ -88,6 +88,16 @@ malnutrition_data <- function(context) {
       df_prop,
       by = c("iso_code" = "iso_code")
     ) %>%
+    # Normalised affected
+    # norm_{year}
+    mutate(
+      across(
+        num_range("x", 2001:2020),
+        # eg. x2001 - x2000
+        ~ .x / max(.x),
+        .names = "{gsub('x', 'norm_', .col)}"
+      )
+    ) %>%
     # Difference in affected versus previous year
     # diff_{year}
     mutate(

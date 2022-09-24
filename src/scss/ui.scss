@@ -6,6 +6,9 @@
 $border-radius: 6px;
 $global-padding-y: 20px;
 $global-padding-x: 20px;
+$font-primary: "League Spartan", "Helvetica", "Arial", sans-serif;
+$font-secondary: "Inter", "Helvetica", "Arial", sans-serif;
+$font-monospace: "JetBrains Mono", monospace;
 
 $colors: (
   "background": #f4f5f3,
@@ -29,7 +32,7 @@ $colors: (
 }
 
 @mixin pill-btn {
-  font-family: "Inter";
+  font-family: $font-secondary;
   font-weight: 500;
   height: 28px;
   padding: 3px 12px;
@@ -48,17 +51,18 @@ html {
   body {
     color: map.get($colors, "foreground");
     background-color: map.get($colors, "background");
-    font-family: "Inter", "Arial", sans-serif;
+    font-family: $font-secondary;
     font-weight: 400;
   }
   
   h1 {
-    font-family: "League Spartan", "Arial", sans-serif;
+    font-family: $font-primary;
     font-weight: 600;
   }
   
   p {
-    font-family: "League Spartan", "Arial", sans-serif;
+    font-family: $font-primary;
+    font-weight: 400;
   }
 }
 
@@ -167,7 +171,7 @@ html {
             left: 30px;
             top: 50%;
             transform: translate(0, -50%);
-            font-family: "Inter";
+            font-family: $font-secondary;
             font-weight: 500;
             color: map.get($colors, "darkgray");
           }
@@ -175,7 +179,7 @@ html {
           #map_context_selector {
             @include pill-btn();
             padding-left: 70px;
-            font-family: "Inter";
+            font-family: $font-secondary;
             font-weight: 500;
             color: map.get($colors, "foreground");
             
