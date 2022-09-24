@@ -68,10 +68,8 @@ map_renderer <- function(map_data, state) {
       ~ gsub(paste0("", year), "", .),
       everything()
     )
-  View(year_data)
 
   # Hover labels
-  #! work in progress
   label_data <- list(
     prev = year_data$prop_,
     num = year_data$x,

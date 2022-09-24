@@ -93,7 +93,6 @@ malnutrition_data <- function(context) {
     mutate(
       across(
         num_range("x", 2001:2020),
-        # eg. x2001 - x2000
         ~ .x / max(.x),
         .names = "{gsub('x', 'norm_', .col)}"
       )
