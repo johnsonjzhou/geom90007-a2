@@ -44,6 +44,24 @@ $colors: (
   }
 }
 
+html {
+  body {
+    color: map.get($colors, "foreground");
+    background-color: map.get($colors, "background");
+    font-family: "Inter", "Arial", sans-serif;
+    font-weight: 400;
+  }
+  
+  h1 {
+    font-family: "League Spartan", "Arial", sans-serif;
+    font-weight: 600;
+  }
+  
+  p {
+    font-family: "League Spartan", "Arial", sans-serif;
+  }
+}
+
 // Hide the display bar
 // @deprecate
 .navbar {

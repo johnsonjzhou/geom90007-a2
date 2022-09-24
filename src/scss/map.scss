@@ -9,6 +9,7 @@
   top: 0;
   left: 0;
   border-radius: calc($border-radius + 4px);
+  box-shadow: 6px 6px 20px rgba(100,100,100,0.3);
   
   &.leaflet-container{
     background-color: map.get($colors, "background");
@@ -16,17 +17,58 @@
   
   & .leaflet-control {
     @include frosted-panel();
+    font-family: "Inter", sans-serif;
     
-    & a.leaflet-control-zoom-in {
-      @include frosted-panel-btn();
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
+    &.info.legend {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      
+      & > div:first-child {
+        text-align: center;
+        
+        & strong {
+          font-weight: 400;
+          font-size: 0.9em;
+          text-transform: uppercase;
+        }
+      }
     }
     
-    & a.leaflet-control-zoom-out {
-      @include frosted-panel-btn();
-      border-bottom-left-radius: 6px;
-      border-bottom-right-radius: 6px;
+    // Zoom controls
+    & a.leaflet-control-zoom-in, & a.leaflet-control-zoom-out {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      background: transparent;
+      
+      &:not(.leaflet-disabled):hover {
+        @include frosted-panel-btn();
+      }
+    }
+    
+    // Reference scale
+    &.leaflet-control-scale {
+      padding: 6px;
+      border-radius: 6px;
+      
+      .leaflet-control-scale-line {
+        background: transparent;
+        border: 1px solid map.get($colors, "foreground");
+        border-top: none;
+        font-family: "Inter", sans-serif;
+        font-size: 10px;
+        color: map.get($colors, "foreground");
+      }
+    }
+    
+    // North arrow
+    &.leaflet-control-north-arrow {
+      width: 36px;
+      height: 36px;
+    }
+    
+    // Hide "Leaflet" logo
+    &.leaflet-control-attribution {
+      display: none;
     }
   }
 }
@@ -40,10 +82,6 @@
   transform: translateX(-50%);
   @include frosted-panel();
   display: flex;
-  
-  #map_context_combo {
-    
-  }
   
   #map_year_combo {
     --plot-width: 550px;

@@ -134,7 +134,22 @@ map_renderer <- function(map_data, state) {
       pal = chloropleth_colors,
       values = year_data$prop_,
       na.label = "Not available",
-      opacity = 1
+      opacity = 1,
+      title = "Prevalence %"
+    ) %>%
+    # Add Reference Scale
+    addScaleBar(
+      position = "bottomleft",
+      options = scaleBarOptions(
+        metric = TRUE,
+        imperial = FALSE
+      )
+    ) %>%
+    # North arrow
+    addControl(
+      html = tags$img(width = 36, height = 36, src = "north.svg"),
+      position = "bottomright",
+      className = "leaflet-control-north-arrow "
     )
   return(map)
 }
