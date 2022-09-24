@@ -82,8 +82,8 @@ map_renderer <- function(map_data, state) {
       (!is.na(year_data$prop_) & !is.na(year_data$x))
         ~ paste(
           glue("<b>Prevalence:</b>: <i>{label_data$prev}%</i>"),
-          glue("<b>Number of children:</b>: <i>{label_data$num}k</i>"),
-          glue("<b>Proportion of all affected:</b>: <i>{label_data$prop}%</i>"),
+          glue("<b>Number of children affected:</b>: <i>{label_data$num}k</i>"),
+          glue("<b>Proportion of all children affected:</b>: <i>{label_data$prop}%</i>"),
           glue("<b>Change from previous year:</b>: <i>{label_data$chng}k</i>"),
           sep = "<br>"
         ),
