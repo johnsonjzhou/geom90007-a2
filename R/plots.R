@@ -21,7 +21,7 @@ yearly_total_plot <- function(map_data, state) {
   # Tooltip template
   tooltip <- paste(
     "<b>Year:</b> %{x}",
-    "<b>Number affected:</b> %{y:d}",
+    "<b>Children affected worldwide:</b> %{y:,d}k",
     "<extra></extra>",
     sep = "<br>"
   )
@@ -140,16 +140,26 @@ indicators_radar_plot <- function(data, state) {
     radar_colors$latest, c(0.3, 1)
   )
 
+  # Tooltip template
+  tooltip <- paste(
+    "<b>Period:</b> %{fullData.name}",
+    "<b>Indicator:</b> %{theta}",
+    "<b>Prevalence:</b> %{r}",
+    "<extra></extra>",
+    sep = "<br>"
+  )
+
   return(plot_ly(
       type = "scatterpolar",
       fill = "toself",
-      mode = "lines+markers"
+      mode = "lines+markers",
+      hovertemplate = tooltip
     ) %>%
     # Add series_1 as "Past"
     add_trace(
       r = series_1,
       theta = theta,
-      name = "Past",
+      name = "Past period",
       fillcolor = series_1_colors[1],
       line = list(color = series_1_colors[2], width = 2),
       marker = list(color = series_1_colors[2])
@@ -158,7 +168,7 @@ indicators_radar_plot <- function(data, state) {
     add_trace(
       r = series_2,
       theta = theta,
-      name = "Latest",
+      name = "Latest period",
       fillcolor = series_2_colors[1],
       line = list(color = series_2_colors[2], width = 2),
       marker = list(color = series_2_colors[2])
@@ -200,6 +210,15 @@ indicators_radar_plot <- function(data, state) {
       margin = list(
         autoexpand = TRUE,
         t = 0, r = 150, b = 0, l = 150
+      ),
+      legend = list(
+        font = list(
+          family = fonts$secondary,
+          color = ui_colors$foreground
+        ),
+        xanchor = "center",
+        orientation = "h",
+        x = 0.5
       )
     )
   )

@@ -1,0 +1,63 @@
+/**
+  Styles for plotly plots
+ */
+ 
+#yearly_total_plot {
+  // tooltip
+  g.hoverlayer {
+    g.hovertext {
+      // tooltip frame
+      // <path ... />
+      path {
+        fill: rgb(244, 245, 243) !important;
+        fill-opacity: 0.9 !important;
+        stroke-width: 0px !important;
+      }
+      
+      // text content container
+      text.nums {
+        font-family: $font-secondary !important;
+        font-size: 10px !important;
+        
+        // <tspan.line><tspan style=bold>{Heading:}</tspan> {number}</tspan>
+        tspan {
+          font-family: $font-secondary !important;
+          color: map.get($colors, "foreground");
+          
+          > &.line {
+            font-family: $font-monospace !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+#details_plot {
+  // tooltip
+  g.hoverlayer {
+    g.hovertext {
+      // tooltip frame
+      // <path ... />
+      path {
+        // default
+      }
+      
+      // text content container
+      text.nums {
+        font-family: $font-secondary !important;
+        font-size: 10px !important;
+        
+        // <tspan.line><tspan style=bold>{Heading:}</tspan> {number}</tspan>
+        tspan {
+          font-family: $font-secondary !important;
+          color: map.get($colors, "foreground");
+          
+          > &.line {
+            font-family: $font-monospace !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -136,7 +136,7 @@ detail_panel <- tabPanel(
     outputId = "details_plot",
     # 600px - 30px padding
     width = "570px",
-    height = "570px"
+    height = "400px"
   )
 )
 
