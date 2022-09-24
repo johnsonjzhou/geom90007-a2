@@ -24,6 +24,17 @@ server <- function(input, output, session) {
 
   #' Reactive states
   state <- reactiveValues()
+  state$ui_colors <- list(
+    "background" = "#f5f3ec",
+    "gray" = "#e7e5e6",
+    "darkgray" = "#79757d",
+    "foreground" = "#1a1b19"
+  )
+  state$fonts <- list(
+    "primary" = "'League Spartan', 'Helvetica', 'Arial', sans-serif",
+    "secondary" = "'Inter', 'Helvetica', 'Arial', sans-serif",
+    "monospace" = "'JetBrains Mono', monospace"
+  )
   state$map_context <- "Stunting"
   state$map_colors <- list(
     "Overweight" = "#e28a2e",

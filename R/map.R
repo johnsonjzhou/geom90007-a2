@@ -12,16 +12,6 @@ library(htmltools)
 
 # Colour definitions-----------------------------------------------------------
 
-#' Colour theme definitions
-map_colors <- list(
-  "background" = "#f5f3ec",
-  "gray" = "#e7e5e6",
-  "darkgray" = "#79757d",
-  "foreground" = "#1a1b19",
-  "obesity" = "#e28a2e",
-  "stunting" = "#65acab"
-)
-
 #' Generates a colour palette based on specified colour varying in alpha
 #' @param hex_col the specified colour as a hex value
 #' @param bins the number of colour (alpha) bins to generate
@@ -65,9 +55,10 @@ map_symbol <- function(ratio, sizes = c(8, 24), zoom = 1, name = "") {
 #' @param state the reactive "state" object
 #' @return a leaflet widget
 map_renderer <- function(map_data, state) {
-  # Get state parameters
+  # Unpack state parameters
   year <- state$year
   context_color <- state$context_color
+  ui_colors <- state$ui_colors
   zoom <- 1
 
   # Isolate year_data from map_data
@@ -116,9 +107,9 @@ map_renderer <- function(map_data, state) {
     ) %>%
     # Add base map layer
     addPolygons(
-      color = map_colors$darkgray,
+      color = ui_colors$darkgray,
       weight = 1,
-      fillColor = map_colors$gray,
+      fillColor = ui_colors$gray,
       fillOpacity = 1,
     ) %>%
     # Add chloropleth layer
