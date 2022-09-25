@@ -1,6 +1,5 @@
 ################################################################################
 # UI components for the dashboard                                              #
-# @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 library(shiny)
 library(glue)

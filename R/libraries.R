@@ -1,6 +1,5 @@
 ################################################################################
 # Libraries required for the app                                               #
-# @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 
 #' Dependencies used in the app

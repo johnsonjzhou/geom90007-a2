@@ -1,6 +1,5 @@
 ################################################################################
 # Data provider for the app                                                    #
-# @author Johnson Zhou zhoujj@student.unimelb.edu.au                           #
 ################################################################################
 library(dplyr)
 library(tidyr)
