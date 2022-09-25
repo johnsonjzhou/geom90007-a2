@@ -193,7 +193,7 @@ detail_panel <- tabPanel(
       width = 1,
       actionButton(
         inputId = "info_detail_open",
-        label = "?"
+        label = "Details"
       ),
     )
   ),
