@@ -15,12 +15,21 @@ supporting data obtained from the UNICEF [data warehouse][unicef_data].
 
 ## Run App
 
-Install dependencies
+### Requirements
+
+This app makes extensive use of the CSS property `backdrop-filter` 
+which is not supported by the native browser within RStudio. 
+
+For the optimal visual experience, please view the running application 
+in a modern browser. `Google Chrome` would be preferred, although would 
+also work in `Firefox` and `Safari`.
+
+### Install dependencies
 ```R
 source("./R/libraries.R")
 ```
 
-Running the Shiny App
+### Running the Shiny App
 ```R
 # ./app.R
 shiny::shinyApp(ui, server)
@@ -34,12 +43,13 @@ root
   |- data: data sources for the dash board
   |- doc: documentation
   |- R: supporting R scripts for the app
-  |- src: source files for images, css, javascript, markdown
-  |- www: production source files for use by the app
+  |- src: supporting non-R source files and assets
+  |- www: production non-R files and assets for use by the app
 ```
 
-### Building supporting source files (optional)
-Source files are built using `webpack`, transforming from `./src` to `./www`.
+### Building supporting (non-R) source files (optional)
+Non-R source files are built using `webpack`, 
+transforming from `./src` to `./www`.  
 ```bash
 # install node module
 npm install
