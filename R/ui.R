@@ -26,6 +26,7 @@ headers <- tags$head(
       "family=Inter:wght@400;500;600",
       "&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600",
       "&family=League+Spartan:wght@500;600",
+      "&family=PT+Serif:ital,wght@0,400;0,700;1,400",
       "&display=swap"
     )
   ),
@@ -47,6 +48,7 @@ title_panel <- tabPanel(
   h1("Nutrition and Food Security around the world"),
   fluidRow(
     id = "title_controls",
+    class = "flex-row",
     column(
       width = 1,
       actionButton(
@@ -81,11 +83,14 @@ info_panel <- tabPanel(
     inputId = "about_close",
     label = "Close"
   ),
-  fixedRow(
+  includeMarkdown("./www/about.md"),
+  fluidRow(
+    class = "flex-row",
     column(
-      width = 1,
+      width = 2,
       tags$image(
-        src = "maps_panel.png"
+        class = "showcase",
+        src = "map_view.png"
       ),
       actionButton(
         inputId = "info_map_open",
@@ -93,9 +98,10 @@ info_panel <- tabPanel(
       )
     ),
     column(
-      width = 1,
+      width = 2,
       tags$image(
-        src = "details_panel.png"
+        class = "showcase",
+        src = "detail_view.png"
       ),
       actionButton(
         inputId = "info_detail_open_about",
@@ -103,7 +109,8 @@ info_panel <- tabPanel(
       )
     )
   ),
-  includeMarkdown("./www/about.md")
+  tags$div(class = "vertical-space"),
+  includeMarkdown("./www/developer.md")
 )
 
 # Info_Map panel
@@ -170,7 +177,8 @@ map_panel <- tabPanel(
 
 detail_panel <- tabPanel(
   title = "Detail",
-  fixedRow(
+  fluidRow(
+    class = "flex-row",
     column(
       width = 1,
       actionButton(
@@ -194,6 +202,13 @@ detail_panel <- tabPanel(
     # 600px - 30px padding
     width = "570px",
     height = "400px"
+  ),
+  tags$div(
+    class = "vertical-space"
+  ),
+  tags$div(
+    class = "blockquote",
+    "Data may not be complete for all countries"
   )
 )
 

@@ -85,6 +85,7 @@ map_renderer <- function(map_data, state) {
           glue("<b>Number of children affected:</b>: <i>{label_data$num}k</i>"),
           glue("<b>Proportion of all children affected:</b>: <i>{label_data$prop}%</i>"),
           glue("<b>Change from previous year:</b>: <i>{label_data$chng}k</i>"),
+          "<em>Click for details</em>",
           sep = "<br>"
         ),
       TRUE ~ "<i>No data to display</i>"

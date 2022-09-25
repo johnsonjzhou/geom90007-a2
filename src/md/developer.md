@@ -1,7 +1,10 @@
 ## Developed by
 Johnson Zhou  
-As part of Assignment 2 submission for the subject *GEOM90007 Information 
-Visualisation* at the University of Melbourne.  
+
+Assignment 2  
+GEOM90007 Information Visualisation  
+University of Melbourne  
+
 Email: [zhoujj@student.unimelb.edu.au][email]  
 Github: [https://github.com/johnsonjzhou/geom90007-a2][github]  
 

@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
   border-radius: calc($border-radius + 4px);
-  box-shadow: 6px 6px 20px rgba(100,100,100,0.3);
+  box-shadow: $box-shadow;
   
   &.leaflet-container{
     background-color: map.get($colors, "background");
@@ -99,7 +99,7 @@
         // as .leaflet-tooltip-pane is 0x0 position absolute
         // thus adjusting the opacity to compensate
         background-color: rgba(map.get($colors, "background"), 0.9);
-        box-shadow: 6px 6px 20px rgba(100,100,100,0.3);
+        box-shadow: $box-shadow;
         font-size: 10px;
         padding: 10px;
         
@@ -117,6 +117,17 @@
           font-style: normal;
           font-family: $font-monospace;
           font-weight: 400;
+        }
+        
+        & em {
+          margin-top: 6px;
+          display: inline-block;
+          font-family: $font-secondary;
+          font-size: 0.8em;
+          font-style: normal;
+          color: map.get($colors, "darkgray");
+          text-transform: uppercase;
+          text-align: center;
         }
         
         &:before, &:after {
@@ -182,6 +193,18 @@
           90deg, rgba(#FFFFFF, 0.9) 0%,
           map.get($colors, "background-frost") 100%
         );
+      }
+      
+      // selected year
+      .irs-single {
+        background-color: map.get($colors, "highlight");
+      }
+      
+      // section label
+      #map_year_slider-label {
+        position: absolute;
+        left: 50%;
+        bottom: -12px;
       }
     }
   }
