@@ -150,7 +150,7 @@ map_controls <- fluidRow(
     ),
     sliderInput(
       inputId = "map_year_slider",
-      label = "Year",
+      label = "Year (slide to change)",
       value = 2001,
       min = 2001,
       max = 2020,
