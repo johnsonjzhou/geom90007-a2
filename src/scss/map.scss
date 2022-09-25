@@ -32,6 +32,25 @@
           text-transform: uppercase;
         }
       }
+      
+      .heading {
+        margin-bottom: 3px;
+        font-weight: 400;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      
+      .row {
+        height: 18px;
+        margin: 0;
+        
+        img.symbol {
+          height: 18px;
+          width: 18px;
+          display: inline-block;
+        }
+      }
     }
     
     // Zoom controls

@@ -250,7 +250,7 @@ html {
           width: 160px;
           border-radius: $border-radius;
           box-shadow: $box-shadow;
-          object-fit: none;
+          object-fit: cover;
           object-position: 50% 50%;
           margin: 20px 0;
         }

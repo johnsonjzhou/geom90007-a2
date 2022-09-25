@@ -50,6 +50,34 @@ map_symbol <- function(ratio, sizes = c(8, 24), zoom = 1, name = "") {
   return(icon)
 }
 
+#' Generates a HTML legend for the custom map symbols
+#' @return htmltools::tag object
+map_symbol_legend <- function() {
+  legend <- tags$html(
+    tags$div(
+      class = "heading",
+      "Yearly change in affected"
+    ),
+    tags$div(
+      class = "row",
+      tags$img(
+        class = "symbol",
+        src = "up.svg"
+      ),
+      "Proportional Increase"
+    ),
+    tags$div(
+      class = "row",
+      tags$img(
+        class = "symbol",
+        src = "down.svg"
+      ),
+      "Proportional Decrease"
+    )
+  )
+  return(legend)
+}
+
 #' Handles leaflet rendering functions for the world map
 #' @param map_data the dataset for the world map with spacial information
 #' @param state the reactive "state" object
@@ -141,6 +169,11 @@ map_renderer <- function(map_data, state) {
         year_data$diff_norm_, zoom = zoom, name = year_data$NAME
       ),
       label = lapply(year_data$label, HTML)
+    ) %>%
+    # Add legend for custom symbols
+    addControl(
+      position = "topright",
+      html = map_symbol_legend()
     ) %>%
     # Add legend
     addLegend(

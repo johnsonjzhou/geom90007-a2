@@ -1,6 +1,6 @@
-# Details pane
+# Details View
 
-> Click on any country on the map to reveal the Details pane.
+> Click on any country on the map to reveal the Details View.
 
 Comparison of key Nutrition and Food Security *indicators* for a 
 selected country across two time periods as presented in *Chapter 2* of 
