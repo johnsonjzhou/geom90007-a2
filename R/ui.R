@@ -76,13 +76,58 @@ dimmer_panel <- tabPanel(
 
 info_panel <- tabPanel(
   title = "About",
+  icon = d_icon("circle-info"),
   actionButton(
     inputId = "about_close",
     label = "Close"
   ),
-  h1("Nutrition and Food Security around the world"),
-  p("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
-  icon = d_icon("circle-info")
+  fixedRow(
+    column(
+      width = 1,
+      tags$image(
+        src = "maps_panel.png"
+      ),
+      actionButton(
+        inputId = "info_map_open",
+        label = "About Map View"
+      )
+    ),
+    column(
+      width = 1,
+      tags$image(
+        src = "details_panel.png"
+      ),
+      actionButton(
+        inputId = "info_detail_open_about",
+        label = "About Details View"
+      )
+    )
+  ),
+  includeMarkdown("./www/about.md")
+)
+
+# Info_Map panel
+
+info_map_panel <- tabPanel(
+  title = "Info_Map",
+  icon = d_icon("circle-info"),
+  actionButton(
+    inputId = "info_map_close",
+    label = "Close"
+  ),
+  includeMarkdown("./www/map_view.md")
+)
+
+# Info_Detail panel
+
+info_detail_panel <- tabPanel(
+  title = "Info_Detail",
+  icon = d_icon("circle-info"),
+  actionButton(
+    inputId = "info_detail_close",
+    label = "Close"
+  ),
+  includeMarkdown("./www/detail_view.md")
 )
 
 # Map Panel---------------------------------------------------------------------
@@ -125,9 +170,21 @@ map_panel <- tabPanel(
 
 detail_panel <- tabPanel(
   title = "Detail",
-  actionButton(
-    inputId = "detail_close",
-    label = "Close"
+  fixedRow(
+    column(
+      width = 1,
+      actionButton(
+        inputId = "detail_close",
+        label = "Close"
+      )
+    ),
+    column(
+      width = 1,
+      actionButton(
+        inputId = "info_detail_open",
+        label = "?"
+      ),
+    )
   ),
   htmlOutput(
     outputId = "country_heading"
@@ -171,6 +228,8 @@ ui <- navbarPage(
   dimmer_panel,
   info_panel,
   detail_panel,
+  info_map_panel,
+  info_detail_panel,
   header = headers,
   windowTitle = "Nutrition and Food Security around the world",
   fluid = FALSE,

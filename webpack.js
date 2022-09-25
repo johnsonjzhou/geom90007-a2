@@ -10,6 +10,10 @@ const copyFiles = [
   {
     from: 'src/img/*.*',
     to: '[name].[ext]'
+  },
+  {
+    from: 'src/md/*.md',
+    to: '[name].[ext]'
   }
 ];
 
@@ -66,7 +70,7 @@ module.exports = {
     // static copy of files
     new CopyPlugin({
       patterns: copyFiles
-    }), 
+    }),
     // clean up
     new RemoveEmptyScriptsPlugin(),
   ]

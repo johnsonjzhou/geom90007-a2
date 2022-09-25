@@ -216,8 +216,9 @@ html {
       }
     }
     
-    // Other panes, hidden
+    // About, Detail panes, hidden
     &:not([data-value="Map"]):not([data-value="Title"]):not([data-value="Dimmer"]) {
+    // &[data-value="About"], &[data-value="Detail"] {
       @include frosted-panel();
       position: fixed;
       top: 50%;
@@ -236,14 +237,48 @@ html {
         @include frosted-panel-btn();
       }
       
-      // Other panes, visible
+      // About, Detail panes, visible
       &.active {
-        transform: translate3d(-50%, -50%, 0) scale(1.05);
+        transform: translate3d(-50%, -50%, 0) scale(1);
         opacity: 1;
         z-index: 20;
         transition: opacity 0.3s ease, transform 0.1s ease;
+        
+        // Active and is overlaid
+        &.underlay {
+          filter: blur(2px) brightness(90%);
+          transform: translate3d(-50%, -70%, 0) scale(0.8);
+        }
       }
     }
+    
+    // &[data-value="Info_Map"] , &[data-value="Info_Detail"] {
+    //   @include frosted-panel();
+    //   position: fixed;
+    //   top: 50%;
+    //   left: 50%;
+    //   width: 600px;
+    //   max-height: calc(100vh - 100px);
+    //   transform: translate3d(-50%, 70vh, 0) scale(1.05);
+    //   display: block;
+    //   opacity: 0;
+    //   padding: 30px 15px;
+    //   text-align: center;
+    //   transition: opacity 0.15s ease, transform 0.5s ease-out;
+      
+    //   .action-button {
+    //     @include pill-btn();
+    //     @include frosted-panel-btn();
+    //   }
+      
+    //   // Info_Map, Info_Detail panes, visible
+    //   &.active {
+    //     transform: translate3d(-50%, -50%, 0) scale(1);
+    //     opacity: 1;
+    //     z-index: 20;
+    //     transition: opacity 0.3s ease, transform 0.1s ease;
+    //   }
+    // }
   }
 }
 

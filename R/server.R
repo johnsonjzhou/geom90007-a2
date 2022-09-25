@@ -33,6 +33,28 @@ server <- function(input, output, session) {
     session$sendCustomMessage(type = "detail_close", message = "close")
   })
 
+  # Info_Map page revealer
+  observeEvent(input$info_map_open, {
+    session$sendCustomMessage(type = "info_map_open", message = "open")
+  })
+
+  observeEvent(input$info_map_close, {
+    session$sendCustomMessage(type = "info_map_close", message = "close")
+  })
+
+  # Info_Detail page revealer
+  observeEvent(input$info_detail_open, {
+    session$sendCustomMessage(type = "info_detail_open", message = "open")
+  })
+
+  observeEvent(input$info_detail_open_about, {
+    session$sendCustomMessage(type = "info_detail_open", message = "open")
+  })
+
+  observeEvent(input$info_detail_close, {
+    session$sendCustomMessage(type = "info_detail_close", message = "close")
+  })
+
   #' State -------------------------------------------------------------------
 
   #' Reactive states and settable defaults

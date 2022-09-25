@@ -105,11 +105,11 @@ indicators_radar_plot <- function(data, state) {
   country_data <- data %>% filter(iso_3 == !!country)
 
   series_1 <- country_data %>%
-    select(series_1_cols) %>%
+    select(all_of(series_1_cols)) %>%
     as.numeric()
 
   series_2 <- country_data %>%
-    select(series_2_cols) %>%
+    select(all_of(series_2_cols)) %>%
     as.numeric()
     
   # Adjust to percentage
