@@ -261,6 +261,16 @@ html {
         
         .form-group.shiny-input-container {
           margin: 0;
+          
+          &:after {
+            content: "expand_more";
+            font-family: 'Material Icons';
+            -webkit-font-feature-settings: 'liga';
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
         }
         
         #map_context_selector-label {
@@ -280,6 +290,7 @@ html {
           font-weight: 500;
           color: map.get($colors, "foreground");
           -webkit-appearance: none;
+          appearance: none;
           
           &:focus {
             box-shadow: none;
