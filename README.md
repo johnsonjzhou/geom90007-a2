@@ -8,6 +8,8 @@ The State of Food Security and Nutrition in the World 2022 (SOFI)
 accessible from [FAO][fao_sofi] or [UNICEF][unicef_sofi] with additional 
 supporting data obtained from the UNICEF [data warehouse][unicef_data].
 
+View the [design summary][design_summary].
+
 ## Views
 
 1. [Map View][map_view]
@@ -80,6 +82,7 @@ Github: [https://github.com/johnsonjzhou/geom90007-a2][github]
 [email2]: mailto:johnson.zhou@simplyuseful.io
 [github]: https://github.com/johnsonjzhou/geom90007-a2
 
+[design_summary]: ./doc/design-summary.pdf
 [screenshot]: ./doc/screenshot.png
 [map_view]: ./src/md/map_view.md
 [detail_view]: ./src/md/detail_view.md
