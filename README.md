@@ -33,8 +33,8 @@ source("./R/libraries.R")
 
 ### Running the Shiny App
 ```R
-# ./app.R
-shiny::shinyApp(ui, server)
+# At the root project directory
+shiny::runApp()
 ```
 
 ## Building
